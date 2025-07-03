@@ -1,0 +1,84 @@
+<?php
+require_once 'includes/header.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    require_once 'includes/db_connect.php';
+    
+    // Validate and sanitize input
+    $name = $conn->real_escape_string($_POST['name']);
+    $email = $conn->real_escape_string($_POST['email']);
+    $phone = $conn->real_escape_string($_POST['phone']);
+    $dob = $conn->real_escape_string($_POST['dob']);
+    $current_class = $conn->real_escape_string($_POST['current_class']);
+    $course_interested = $conn->real_escape_string($_POST['course_interested']);
+    
+    // Insert into database
+    $sql = "INSERT INTO students (name, email, phone, dob, current_class, course_interested) 
+            VALUES ('$name', '$email', '$phone', '$dob', '$current_class', '$course_interested')";
+    
+    if ($conn->query($sql) {
+        echo '<div class="success-message">Registration successful! We will contact you soon.</div>';
+    } else {
+        echo '<div class="error-message">Error: ' . $conn->error . '</div>';
+    }
+    
+    $conn->close();
+}
+?>
+
+<section class="registration-form">
+    <div class="container">
+        <h2>Student Registration</h2>
+        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+            <div class="form-group">
+                <label for="name">Full Name*</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address*</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number*</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth*</label>
+                <input type="date" id="dob" name="dob" required>
+            </div>
+            <div class="form-group">
+                <label for="current_class">Current Class*</label>
+                <select id="current_class" name="current_class" required>
+                    <option value="">Select Class</option>
+                    <option value="9">Class 9</option>
+                    <option value="10">Class 10</option>
+                    <option value="11">Class 11</option>
+                    <option value="12">Class 12</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="course_interested">Course Interested In*</label>
+                <select id="course_interested" name="course_interested" required>
+                    <option value="">Select Course</option>
+                    <?php
+                    require_once 'includes/db_connect.php';
+                    $sql = "SELECT id, title FROM courses WHERE is_active = 1";
+                    $result = $conn->query($sql);
+                    
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            echo '<option value="'.$row["id"].'">'.$row["title"].'</option>';
+                        }
+                    }
+                    $conn->close();
+                    ?>
+                </select>
+            </div>
+            <button type="submit" class="btn">Submit Application</button>
+        </form>
+    </div>
+</section>
+
+<?php
+require_once 'includes/footer.php';
+?>

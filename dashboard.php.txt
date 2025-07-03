@@ -1,0 +1,96 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['staff_loggedin']) {
+    header("Location: ../login.php");
+    exit;
+}
+
+require_once '../includes/header.php';
+require_once '../includes/db_connect.php';
+
+// Get counts for dashboard
+$students_count = $conn->query("SELECT COUNT(*) FROM students")->fetch_row()[0];
+$courses_count = $conn->query("SELECT COUNT(*) FROM courses WHERE is_active = 1")->fetch_row()[0];
+$announcements_count = $conn->query("SELECT COUNT(*) FROM announcements WHERE is_active = 1")->fetch_row()[0];
+?>
+
+<div class="admin-container">
+    <div class="sidebar">
+        <h3>Admin Panel</h3>
+        <ul>
+            <li class="active"><a href="dashboard.php"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="manage_students.php"><i class="fas fa-users"></i> Manage Students</a></li>
+            <li><a href="manage_courses.php"><i class="fas fa-book"></i> Manage Courses</a></li>
+            <li><a href="manage_announcements.php"><i class="fas fa-bullhorn"></i> Manage Announcements</a></li>
+            <li><a href="manage_staff.php"><i class="fas fa-user-shield"></i> Manage Staff</a></li>
+            <li><a href="../logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </div>
+    
+    <div class="main-content">
+        <h2>Dashboard</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Students</h3>
+                <p><?php echo $students_count; ?></p>
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-card">
+                <h3>Active Courses</h3>
+                <p><?php echo $courses_count; ?></p>
+                <i class="fas fa-book"></i>
+            </div>
+            <div class="stat-card">
+                <h3>Active Announcements</h3>
+                <p><?php echo $announcements_count; ?></p>
+                <i class="fas fa-bullhorn"></i>
+            </div>
+        </div>
+        
+        <div class="recent-registrations">
+            <h3>Recent Registrations</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Course</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $sql = "SELECT s.id, s.name, s.email, s.phone, s.registration_date, c.title 
+                            FROM students s 
+                            LEFT JOIN courses c ON s.course_interested = c.id 
+                            ORDER BY s.registration_date DESC LIMIT 5";
+                    $result = $conn->query($sql);
+                    
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            echo '<tr>';
+                            echo '<td>'.$row["id"].'</td>';
+                            echo '<td>'.$row["name"].'</td>';
+                            echo '<td>'.$row["email"].'</td>';
+                            echo '<td>'.$row["phone"].'</td>';
+                            echo '<td>'.$row["title"].'</td>';
+                            echo '<td>'.date("M j, Y", strtotime($row["registration_date"])).'</td>';
+                            echo '</tr>';
+                        }
+                    } else {
+                        echo '<tr><td colspan="6">No recent registrations</td></tr>';
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<?php
+$conn->close();
+require_once '../includes/footer.php';
+?>

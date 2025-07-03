@@ -1,0 +1,59 @@
+<?php
+require_once 'includes/header.php';
+?>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h2>Unlock Your Potential With <?php echo SITE_NAME; ?></h2>
+            <p>Join our premier coaching institute and take the first step towards academic excellence and career success.</p>
+            <a href="courses.php" class="btn">Explore Courses</a>
+            <a href="register.php" class="btn btn-secondary">Register Now</a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+    <div class="container">
+        <div class="section-title">
+            <h2>Why Choose <?php echo SITE_NAME; ?>?</h2>
+        </div>
+        <div class="features-grid">
+            <!-- Feature cards would go here -->
+        </div>
+    </div>
+</section>
+
+<!-- Latest Announcements -->
+<section class="announcements">
+    <div class="container">
+        <div class="section-title">
+            <h2>Latest Announcements</h2>
+        </div>
+        <?php
+        // Fetch latest announcements
+        require_once 'includes/db_connect.php';
+        $sql = "SELECT * FROM announcements WHERE is_active = 1 AND (expiry_date IS NULL OR expiry_date >= CURDATE()) ORDER BY publish_date DESC LIMIT 3";
+        $result = $conn->query($sql);
+        
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                echo '<div class="announcement-card">';
+                echo '<h3>'.$row["title"].'</h3>';
+                echo '<span class="announcement-date">'.date("F j, Y", strtotime($row["publish_date"])).'</span>';
+                echo '<p>'.$row["content"].'</p>';
+                echo '</div>';
+            }
+        } else {
+            echo '<p>No announcements at this time.</p>';
+        }
+        $conn->close();
+        ?>
+    </div>
+</section>
+
+<?php
+require_once 'includes/footer.php';
+?>
