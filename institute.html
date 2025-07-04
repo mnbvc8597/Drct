@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Institute</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #0d47a1; /* Dark blue for header */
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative; /* Needed for absolute positioning of institute name */
+        }
+
+        .institute-name {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav {
+            flex-grow: 1; /* Allows nav to take up available space */
+            text-align: center; /* Center the navigation links */
+            padding-left: 150px; /* Adjust based on institute name width */
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: inline-block; /* Allows ul to be centered */
+        }
+
+        nav ul li {
+            display: inline-block;
+            position: relative;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+        }
+
+        nav ul li a:hover {
+            background-color: #1976d2; /* Lighter blue on hover */
+        }
+
+        /* Sub-menu styling */
+        nav ul li ul {
+            display: none;
+            position: absolute;
+            background-color: #2196f3; /* Blue for sub-menu background */
+            min-width: 160px;
+            z-index: 1;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            text-align: left; /* Align sub-menu items to the left */
+        }
+
+        nav ul li:hover ul {
+            display: block;
+        }
+
+        nav ul li ul li {
+            display: block;
+            margin: 0;
+        }
+
+        nav ul li ul li a {
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+
+        nav ul li ul li a:hover {
+            background-color: #42a5f5; /* Even lighter blue on sub-menu hover */
+        }
+
+        .image-slider {
+            width: 80%;
+            margin: 20px auto;
+            overflow: hidden;
+            border: 5px solid #ccc;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .slider-container {
+            display: flex;
+            transition: transform 0.8s ease-in-out;
+        }
+
+        .slider-container img {
+            width: 100%;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        /* Basic styling for content sections */
+        .content {
+            padding: 20px;
+            margin: 0 10%;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="institute-name">Our Institute Name</div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a>
+                    <ul>
+                        <li><a href="#">Welcome</a></li>
+                        <li><a href="#">About Us Brief</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Gallery</a>
+                    <ul>
+                        <li><a href="#">Photos</a></li>
+                        <li><a href="#">Videos</a></li>
+                        <li><a href="#">Virtual Tour</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Activities</a>
+                    <ul>
+                        <li><a href="#">Events</a></li>
+                        <li><a href="#">Workshops</a></li>
+                        <li><a href="#">Clubs</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Success Stories</a>
+                    <ul>
+                        <li><a href="#">Alumni Testimonials</a></li>
+                        <li><a href="#">Student Achievements</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">About Us</a>
+                    <ul>
+                        <li><a href="#">Our Mission</a></li>
+                        <li><a href="#">Our Vision</a></li>
+                        <li><a href="#">Faculty</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Apply Now</a>
+                    <ul>
+                        <li><a href="#">Admission Process</a></li>
+                        <li><a href="#">Courses Offered</a></li>
+                        <li><a href="#">Scholarships</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Staff Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="image-slider">
+        <div class="slider-container" id="sliderContainer">
+            <img src="https://via.placeholder.com/1200x400/FF5733/FFFFFF?text=Image+1" alt="Institute Image 1">
+            <img src="https://via.placeholder.com/1200x400/33FF57/FFFFFF?text=Image+2" alt="Institute Image 2">
+            <img src="https://via.placeholder.com/1200x400/3357FF/FFFFFF?text=Image+3" alt="Institute Image 3">
+        </div>
+    </div>
+
+    <div class="content">
+        <h2>Welcome to Our Institute!</h2>
+        <p>This is a brief introduction to our institute. We are dedicated to providing excellent education and fostering a vibrant learning environment. Explore our various sections to learn more about what we offer, our achievements, and how you can become a part of our community.</p>
+        <p>Feel free to browse through our **Gallery** to see glimpses of our campus life and events. Check out our **Activities** section to stay updated on upcoming workshops and events. Our **Success Stories** highlight the accomplishments of our students and alumni.</p>
+        <p>If you're interested in joining us, please visit the **Apply Now** section for detailed information on our admission process.</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Our Institute. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const sliderContainer = document.getElementById('sliderContainer');
+        const images = sliderContainer.querySelectorAll('img');
+        let currentIndex = 0;
+
+        function scrollImages() {
+            currentIndex++;
+            if (currentIndex >= images.length) {
+                currentIndex = 0;
+            }
+            const offset = -currentIndex * 100; // Move by 100% of image width
+            sliderContainer.style.transform = `translateX(${offset}%)`;
+        }
+
+        // Set interval for continuous scrolling (e.g., every 3 seconds)
+        setInterval(scrollImages, 3000);
+    </script>
+
+</body>
+</html>
